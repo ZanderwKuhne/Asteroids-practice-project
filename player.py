@@ -1,4 +1,5 @@
 import pygame
+from asteroid import Asteroid
 from shot import Shot
 import circleshape
 from constants import (
@@ -9,6 +10,8 @@ from constants import (
     PLAYER_SPEED,
     PLAYER_TURN_SPEED,
     SHOT_RADIUS,
+    SCREEN_HEIGHT,
+    SCREEN_WIDTH,
 )
 
 
@@ -17,6 +20,7 @@ class Player(circleshape.CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.cooldown = cooldown
+        self.lives = 3
 
     # in the Player class
     def triangle(self):
@@ -63,3 +67,10 @@ class Player(circleshape.CircleShape):
         bullet.velocity = (
             pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
         )
+
+    def respawn(self):
+        self.lives -= 1
+        self.position.x = SCREEN_WIDTH / 2
+        self.position.y = SCREEN_HEIGHT / 2
+        self.cooldown = 0
+        self.rotation = 0

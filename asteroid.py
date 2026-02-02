@@ -8,6 +8,14 @@ import random
 class Asteroid(circleshape.CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
+        if self.radius == constants.ASTEROID_MAX_RADIUS:
+            self.score = constants.BIG_SCORE
+        elif (
+            constants.ASTEROID_MIN_RADIUS < self.radius < constants.ASTEROID_MAX_RADIUS
+        ):
+            self.score = constants.MED_SCORE
+        else:
+            self.score = constants.SMALL_SCORE
 
     def draw(self, screen):
         pygame.draw.circle(
